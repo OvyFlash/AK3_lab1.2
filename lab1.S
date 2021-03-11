@@ -8,6 +8,12 @@
 #define a #4
 #define b #6
 #define c #4
+
+//So, push{lr} is putting the return address, in the link register, 
+//onto the stack when the subroutine is called.
+//pop{pc} is fetching that return address off the stack and putting 
+//it into the program counter, thus returning control back to the place the subroutine was called from.
+
 lab1:
 	// lr - link register
 	// used to hold the return address for a func call
@@ -22,17 +28,17 @@ lab1:
 	pop {pc}
 	
 calc:
-	push { r4, r5, lr }
+	push { r3, r4, lr }
 	// adds r0 and r1. Result in r5
-	add r5, r0, r1 //add a + b
-	mov r4, #2 // 2
+	add r4, r0, r1 //add a + b
+	mov r3, #2 // 2
 	// unsigned div
-	sdiv r5, r5, r4 //(a+b)/2
+	sdiv r4, r4, r3 //(a+b)/2
 	
 	mov r0, r2 // mov r0, c (because bne compares r0)
 	bl factorial
-	add r0, r0, r5
-	pop { r4, r5, pc }
+	add r0, r0, r4
+	pop { r3, r4, pc }
 
 factorial:
 	push { r4 }
